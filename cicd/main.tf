@@ -47,12 +47,6 @@ module "nexus" {
   ami = "ami-00ca32bbc84273381"
   key_name = aws_key_pair.tools.key_name
   user_data = file("nexus.sh")
-   root_block_device = [
-    {
-      volume_type = "gp3"
-      volume_size = 30
-    }
-  ]
   tags = {
     Name = "nexus"
   }
