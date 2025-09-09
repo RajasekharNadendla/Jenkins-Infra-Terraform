@@ -52,6 +52,23 @@ module "nexus" {
   }
 }
 
+module "SonarQube" {
+  source  = "terraform-aws-modules/ec2-instance/aws"
+
+  name = "SonarQube"
+
+  instance_type          = "t3.medium"
+  vpc_security_group_ids = ["sg-033297d264125ae07"]
+  # convert StringList to list and get first element
+  subnet_id = "subnet-0a416220bce54db2e"
+  ami = "ami-00ca32bbc84273381"
+  key_name = aws_key_pair.tools.key_name
+  user_data = file("SonarQube.sh")
+  tags = {
+    Name = "nexus"
+  }
+}
+
 module "records" {
   source  = "terraform-aws-modules/route53/aws//modules/records"
   version = "~> 2.0"
